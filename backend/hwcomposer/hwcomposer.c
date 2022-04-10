@@ -92,7 +92,11 @@ bool hwcomposer_api_init(struct wlr_hwcomposer_backend *hwc)
 
 	hw_module_t *hwc_module = 0;
 
-	err = hw_get_module(HWC_HARDWARE_MODULE_ID, (const hw_module_t **) &hwc_module);
+	#ifdef HWC_DEVICE_API_VERSION_2_0
+		err = 0
+	#else
+		err = hw_get_module(HWC_HARDWARE_MODULE_ID, (const hw_module_t **) &hwc_module);
+	#endif
 	assert(err == 0);
 
 	wlr_log(WLR_INFO, "== hwcomposer module ==\n");
